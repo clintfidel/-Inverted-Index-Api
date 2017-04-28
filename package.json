@@ -1,0 +1,37 @@
+{
+  "name": "inverted-index-api",
+  "version": "1.0.0",
+  "description": "search function ",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "babel-eslint": "^7.2.3",
+    "dotenv": "^4.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "gulp-jasmine": "^2.4.2",
+    "jasmine": "^2.6.0",
+    "supertest": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clintfidel/inverted-index-api.git"
+  },
+  "author": "clinton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clintfidel/inverted-index-api/issues"
+  },
+  "homepage": "https://github.com/clintfidel/inverted-index-api#readme"
+}
