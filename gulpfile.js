@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+<<<<<<< Updated upstream
 const browsersync = require('browser-sync');
 // implementation of task
 /* gulp.task('hello', () => {
@@ -10,4 +11,9 @@ gulp.task('browserSync', () => {
       baseDir: 'src'
     },
   });
+=======
+
+gulp.task('default', () => {
+  console.log('gulp is working');
+>>>>>>> Stashed changes
 });
