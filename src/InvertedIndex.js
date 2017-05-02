@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 /**
  * global ClassDeclaration
@@ -49,3 +50,10 @@
 
  };
  export default InvertedIndex;
+=======
+class invertedIndex {
+  createIndex(req, res) {
+    res.send('welcome to my first api');
+  }
+}
+>>>>>>> 753d8b0741a72e8f0f2595e6bfe46eb3fae0d1de
