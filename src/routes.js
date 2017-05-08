@@ -1,7 +1,15 @@
-import express from 'express';
-import InvertedIndex from './InvertedIndex'; // importing the InvertedIndex class
+import express from 'express'; // importing express for routing
+import InvertedIndex from '../src/InvertedIndex'; // importing the InvertedIndex class
 
-const app = express.Router();
-app.post('/createIndex', InvertedIndex.createIndex);
-// api.post('/searchIndex', InvertedIndex.createIndex)s;
-export default app;
+const invertedIndex = new InvertedIndex();
+const api = express.Router();
+
+api.post('/createIndex', (req, res) => {
+  // console.log();
+  const result = invertedIndex.createIndex('books.json', req.body);
+  res.send(result);
+});
+api.post('/searchIndex', (req, res) => {
+  res.send(invertedIndex.searchIndex());
+});
+export default api;
