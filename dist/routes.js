@@ -19,8 +19,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var invertedIndex = new _InvertedIndex2.default(); // importing express for routing
 
 var api = _express2.default.Router();
+
 api.post('/createIndex', function (req, res) {
-  res.send(invertedIndex.createIndex());
+  // console.log();
+  var result = invertedIndex.createIndex('books.json', req.body);
+  res.send(result);
 });
 api.post('/searchIndex', function (req, res) {
   res.send(invertedIndex.searchIndex());

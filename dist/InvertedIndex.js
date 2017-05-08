@@ -20,6 +20,7 @@ var InvertedIndex = function () {
     _classCallCheck(this, InvertedIndex);
 
     this.indices = {};
+    this.fileContent = '';
   }
   /**
    * createIndex - creates index for json files e.g of:[0,1,2,3,4]
@@ -35,10 +36,10 @@ var InvertedIndex = function () {
       var _this = this;
 
       var indices = {};
-      if (!this.constructor.emptyArray(fileContent) && this.constructor.invalidFile(fileContent) === false) {
+      if (!this.emptyArray(fileContent) && this.invalidFile(fileContent) === false) {
         fileContent.forEach(function (element, index) {
           var allText = element.title + ' ' + element.text;
-          var bookToken = _this.constructor.getToken(allText);
+          var bookToken = _this.getToken(allText);
           bookToken.forEach(function (token) {
             if (token in indices) {
               var tokenResult = indices[token];
@@ -62,14 +63,53 @@ var InvertedIndex = function () {
      */
 
   }, {
-    key: 'searchIndex',
+    key: 'getToken',
+    value: function getToken(text) {
+      this.fileContent = text;
+      return text.toLowerCase() // turns to lower case
+      .split(/\s+/); // splits by spaces
+    }
+    /**
+     * invalidFile - checks for invalid json file
+     * @param  {object} fileContent takes in an object
+     * @return {boolean}   return a boolean(true)
+     */
 
+  }, {
+    key: 'invalidFile',
+    value: function invalidFile(fileContent) {
+      this.fileContent = fileContent;
+      var status = false;
+      if (fileContent.some(function (arraryObject) {
+        return arraryObject.title === undefined || arraryObject.text === undefined;
+      })) {
+        status = true;
+      }
+      return status;
+    }
+    /**
+     * emptyArray - checks for empty json file
+     * @param  {object} fileContent takes in an object
+     * @return {boolean}  return boolean(true)
+     */
+
+  }, {
+    key: 'emptyArray',
+    value: function emptyArray(fileContent) {
+      this.fileContent = fileContent;
+      if (fileContent.length === 0) {
+        return 'emptyJson';
+      }
+    }
     /**
      *  searchIndex - searches for the index of the valid json file created
      * @param  {Object} fileContent object as an arg
      * @param  {object} terms    array of object
      * @return {Object}             description
      **/
+
+  }, {
+    key: 'searchIndex',
     value: function searchIndex(fileContent) {
       var collector = [];
       var eachKey = this.createIndex('boy', fileContent);
@@ -98,7 +138,6 @@ var InvertedIndex = function () {
           _splitTerms = _splitTerms.split(/[\s]/g);
           for (var j = 0; j < _splitTerms.length; j += 1) {
             for (var index = 0; index < _eachKeys.length; index += 1) {
-              // conditional statements
               if (_splitTerms[j] === _eachKeys[index]) {
                 collector.push(eachKey[_eachKeys[index]]);
               }
@@ -106,7 +145,7 @@ var InvertedIndex = function () {
           }
         }
       }
-      // conditional statements
+
       if (collector.length >= 1) {
         collector.forEach(function (data) {
           console.log(data);
@@ -114,43 +153,6 @@ var InvertedIndex = function () {
       } else {
         return 'Not Found';
       }
-    }
-  }], [{
-    key: 'getToken',
-    value: function getToken(text) {
-      return text.toLowerCase() // turns to lower case
-      .split(/\s+/); // splits by spaces
-    }
-    /**
-     * invalidFile - checks for invalid json file
-     * @param  {object} fileContent takes in an object
-     * @return {boolean}   return a boolean(true)
-     */
-
-  }, {
-    key: 'invalidFile',
-    value: function invalidFile(fileContent) {
-      var status = false;
-      fileContent.forEach(function (element) {
-        if (/[$&@!(&#@%*^]/gi.test(element.title)) {
-          status = true;
-        }
-      });
-      return status;
-    }
-    /**
-     * emptyArray - checks for empty json file
-     * @param  {object} fileContent takes in an object
-     * @return {boolean}  return boolean(true)
-     */
-
-  }, {
-    key: 'emptyArray',
-    value: function emptyArray(fileContent) {
-      if (fileContent <= []) {
-        return true;
-      }
-      return false;
     }
   }]);
 

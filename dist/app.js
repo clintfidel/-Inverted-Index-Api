@@ -31,13 +31,12 @@ _dotenv2.default.config(); // imporrting the config file
 // importing dotenv library
 
 var app = (0, _express2.default)();
-app.use(_bodyParser2.default.urlencoded({ extended: false }));
+app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(_bodyParser2.default.json());
 app.use('/api', _routes2.default);
 process.env.NODE_ENV = 'production';
-var port = _config2.default[process.env.NODE_ENV].PORT;
 
-process.env.NODE_ENV = 'production';
+var port = _config2.default[process.env.NODE_ENV].PORT;
 app.listen(port, function (err) {
   if (!err) {
     console.log('listening to server @ port ' + port);
