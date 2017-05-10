@@ -6,42 +6,74 @@ import emptyBook from '../fixtures/emptyBook.json';
 import malformedBook from '../fixtures/malformedBook.json';
 import validBook from '../fixtures/validBook.json';
 import samples from '../fixtures/samples';
+import improperBook from '../fixtures/improperBook.json';
 
 const sampleFileContent = samples.sampleFileContent;
 const sampleResult = samples.sampleResult;
 const invertedindex = new InvertedIndex();
 
 
-describe('Read book data', () => {
-  it('Should return invalid file content for empty JSON Array', () => {
-    expect(invertedindex.emptyArray(emptyBook)).toEqual('emptyJson');
-  });
+describe('Inverted Index Class', () => {
+  describe('Validate data', () => {
+    it('Should return invalid file content for empty JSON Array', () => {
+      expect(invertedindex.emptyArray(emptyBook)).toBeFalsy();
+    });
+    it('Should check if invertedIndex is an instance of InvertedIndex Class', () => {
+      expect(invertedindex instanceof InvertedIndex).toBeTruthy();
+    });
+    it('Should return true if invertedIndex has allIndices as its property', () => {
+      expect('allIndices' in invertedindex).toBeTruthy();
+    });
+    it('Should return true if invertedIndex has a constructor', () => {
+      expect(InvertedIndex.constructor === Function).toBeTruthy();
+    });
+    it('Should return true if invertedIndex has fileContents as its property', () => {
+      expect('fileContent' in invertedindex).toBeTruthy();
+    });
+    it('Should return true for invalid Json file', () => {
+      expect(invertedindex.invalidFile(malformedBook)).toBeFalsy();
+    });
+    it('Should return true if the title and text of fileContent is undefined', () => {
+      expect(invertedindex.invalidFile(sampleFileContent === malformedBook)).toBeFalsy();
+    });
+    it('Should return true for wrong key in Json file', () => {
+      expect(invertedindex.invalidFile(sampleFileContent)).toBeFalsy();
+    });
 
-  it('Should return true for invalid JSON file', () => {
-    expect(invertedindex.invalidFile(malformedBook)).toEqual(true);
-  });
-
-//   it('Should return  for wrong key json file', () => {
-//     expect(InvertedIndex.isValidContent(wrongFormat)).toEqual(false);
-//   });
-// });
-
-  describe('Populate Index', () => {
-    it('should  check that JSON file has been read,once index is created',
-    () => {
-      expect(invertedindex.createIndex('validBook.json', sampleFileContent)).toEqual(sampleResult);
+    it('Should return an array for getToken function', () => {
+      expect(invertedindex.getToken(validBook[0].text)).toEqual(['this', 'string', 'seeks']);
+    });
+    it('Should replace every non-alphanumeric key with a space', () => {
+      expect(invertedindex.getToken(improperBook[0].text)).toEqual(['this', 'string', 'seeks']);
     });
   });
 
-  it('Should create index once JSON file has been read', () => {
-    invertedindex.createIndex('sampleResult', sampleResult);
-    expect(invertedindex.sampleResult).toEqual({
+  describe('CreateIndex', () => {
+    it('Should verify if validBook is an array of object', () => {
+      expect(invertedindex.createIndex('validBook', sampleFileContent))
+      .toBeTruthy();
+    });
 
+    it('should  check that JSON file has been read,once index is created', () => {
+      expect(invertedindex.createIndex('validBook', validBook)).toEqual(sampleResult);
     });
   });
 
-  it('Should ensure each key maps correct object', () => 
-    InvertedIndex.createIndex('sampleResult', sampleResult);
-    expect(invertedindex.getToken('validBook').sampleFileContent).toEqual(sampleResult);
+
+  describe('searchIndex', () => {
+    const result = invertedindex.createIndex('validBook', sampleFileContent);
+    const resultIndex = invertedindex.searchIndex(result, 'validBook', 'string');
+    it('Should return the result from a search term', () => {
+      expect(resultIndex)
+      .toEqual({ string: [0, 1] });
+    });
+    describe('searchIndex', () => {
+      const searchResult = invertedindex.createIndex('validBook', sampleFileContent);
+      const searchedIndex = invertedindex.searchIndex(searchResult, 'validBook', 'john');
+      it('Should return Not found! for a term not found in the Json file', () => {
+        expect(searchedIndex)
+      .toEqual({ john: 'Not found!' });
+      });
+    });
   });
 });
