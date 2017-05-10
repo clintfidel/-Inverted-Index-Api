@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import server from 'gulp-nodemon';
- import watch from 'gulp-watch';
+import watch from 'gulp-watch';
 import coveralls from 'gulp-coveralls';
 import istanbul from 'gulp-babel-istanbul';
 import jasmineNode from 'gulp-jasmine-node';
@@ -63,10 +63,7 @@ gulp.task('transpile', () => {
           .pipe(gulp.dest('dist'));
 });
 
-gulp.task('coveralls', ['coverage'], () => {
-  if (!process.env.CI) {
-    return;
-  }
+gulp.task('coveralls', ['run-tests'], () => {
   return gulp.src('coverage/lcov.info')
     .pipe(coveralls());
 });
