@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import server from 'gulp-nodemon';
-import gulpWatch from 'gulp-watch';
+ import watch from 'gulp-watch';
 import coveralls from 'gulp-coveralls';
 import istanbul from 'gulp-babel-istanbul';
 import jasmineNode from 'gulp-jasmine-node';
@@ -16,32 +16,33 @@ gulp.task('pre-test', () => {
  .pipe(istanbul.hookRequire());
 });
 
- // implementing run-tests task
-gulp.task('run-tests', ['pre-test'], () => {
-  gulp.src('test/inverted-index-test.js')
- .pipe(babel({
-   presets: ['es2015'],
- }))
- .pipe(injectModules())
- // using jasmine-node to run test assertions
- .pipe(jasmineNode({
-   timeout: 10000,
-   includeStackTrace: true,
-   color: true
- }))
- .pipe(istanbul.writeReports());
+
+gulp.task('run-tests', () => {
+  gulp.src('test/*.js')
+      .pipe(babel())
+      .pipe(jasmineNode());
 });
 
 // Test Coverage: sends report to coverage folder
-gulp.task('coverage', ['run-tests'], () => {
-  gulp.src('coverage/lcov.info')
- .pipe(coveralls());
+gulp.task('coverage', (cb) => {
+  gulp.src(['src/*js'])
+    .pipe(istanbul())
+    .pipe(injectModules())
+    .on('finish', () => {
+      gulp.src('test/*.js')
+      .pipe(babel())
+      .pipe(injectModules())
+      .pipe(jasmineNode())
+      .pipe(istanbul.writeReports())
+      .pipe(istanbul.enforceThresholds({ thresholds: { global: 50 } }))
+      .on('end', cb);
+    });
 });
 
 // Runs server
-gulp.task('serve', () => {
+gulp.task('serve', ['transpile'], () => {
   server({
-    script: 'dist/app.js',
+    script: 'src/*.js',
     ext: 'js json html',
     ignore: [
       'node_modules/',
@@ -62,10 +63,21 @@ gulp.task('transpile', () => {
           .pipe(gulp.dest('dist'));
 });
 
-gulp.task('start', ['serve'], () => {
-  gulp.src(['src/routes.js'])
-  .pipe(gulpWatch());
+gulp.task('coveralls', ['coverage'], () => {
+  if (!process.env.CI) {
+    return;
+  }
+  return gulp.src('coverage/lcov.info')
+    .pipe(coveralls());
 });
 
+gulp.task('start', ['serve'], () => {
+  gulp.src(['src/routes.js', 'src/app.js'])
+  .pipe(server());
+});
 
-gulp.task('default', ['pre-test', 'test', 'coverage', 'serve', 'transpile', 'watch']);
+gulp.task('watch', () => {
+  gulp.watch('src/app.js, src/routes.js', ['serve']);
+});
+
+gulp.task('default', ['pre-test', 'test', 'coverage', 'serve', 'coveralls', 'transpile', 'watch']);
