@@ -4,7 +4,7 @@
   "description": "search function ",
   "main": "index.js",
   "directories": {
-    "test": "test"
+    "test": "gulp run-tests"
   },
   "dependencies": {
     "babel-eslint": "^7.2.3",
@@ -42,8 +42,8 @@
     "gulp-watch": "^4.3.11"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "run-test": "gulp coverage",
+    "test": "gulp run-tests",
+    "coverage": "gulp coverage",
     "transpile": "babel src/*js, test/*js",
     "start": "nodemon --exec babel-node -- src/app.js"
   },
