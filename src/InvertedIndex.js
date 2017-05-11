@@ -103,9 +103,6 @@
    * @return {array}  description return an array
    **/
     searchIndex(index, fileName, ...terms) {
-      console.log(fileName)
-      console.log(terms)
-      console.log(index)
       this.fileContent = fileName;
       const searchResult = {};
       fileName = Object.keys(index)[0];
