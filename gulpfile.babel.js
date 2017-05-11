@@ -10,13 +10,11 @@ import injectModules from 'gulp-inject-modules';
 
 gulp.task('pre-test', () => {
   gulp.src(['src/*.js', 'test/*.js'])
- // Covering file
  .pipe(istanbul({ includeUntested: true }))
- // using require to return covered files
  .pipe(istanbul.hookRequire());
 });
 
-
+// Run test
 gulp.task('run-tests', () => {
   gulp.src('test/*.js')
       .pipe(babel())
@@ -42,7 +40,7 @@ gulp.task('coverage', (cb) => {
 // Runs server
 gulp.task('serve', ['transpile'], () => {
   server({
-    script: 'src/*.js',
+    script: 'dist/*.js',
     ext: 'js json html',
     ignore: [
       'node_modules/',
@@ -77,4 +75,4 @@ gulp.task('watch', () => {
   gulp.watch('src/app.js, src/routes.js', ['serve']);
 });
 
-gulp.task('default', ['pre-test', 'test', 'coverage', 'serve', 'coveralls', 'transpile', 'watch']);
+gulp.task('default', ['pre-test', 'run-tests', 'serve', 'coveralls', 'transpile', 'watch']);
