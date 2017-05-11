@@ -24,7 +24,7 @@ app.post('/searchIndex', (req, res) => {
     invertedIndex.searchIndex(index, fileName, terms);
     res.status(200).send(searchTermResult);
   } catch (err) {
-    res.status(500).send('Request could not be completed. Please try again');  
+    res.status(500).send('Request could not be completed. Please try again');
   }
 });
 
