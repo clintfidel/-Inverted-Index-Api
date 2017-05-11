@@ -43,7 +43,7 @@
   },
   "scripts": {
     "test": "gulp run-tests",
-    "coverage": "gulp coverage",
+    "run-test": "gulp coverage",
     "transpile": "babel src/*js, test/*js",
     "start": "nodemon --exec babel-node -- src/app.js"
   },
