@@ -18,7 +18,7 @@
     createIndex(fileName, fileContent) {
       const indices = {};
       if (!this.emptyArray(fileContent) &&
-      this.invalidFile(fileContent) === false) {
+      (!this.invalidFile(fileContent)) && this.malformedFile(fileContent) === false) {
         fileContent.forEach((element, index) => {
           const allText = element.text;
           const bookToken = this.getToken(allText);
@@ -55,19 +55,35 @@
  /**
   * invalidFile - checks for invalid json file
   * @param  {object} fileContent takes in an object
-  * @return {boolean}   return a boolean(true)
+  * @return {error}   return an error message
   */
     invalidFile(fileContent) {
       this.fileContent = fileContent;
       let status = false;
-      if (fileContent.some(arraryObject => arraryObject.title === undefined ||
-          arraryObject.text === undefined)) {
+      if (!Array.isArray(fileContent)) {
         status = true;
       }
-
       return status;
     }
+
  /**
+  * malfomedFile - checks for invalid json file
+  * @param  {object} fileContent takes in an object
+  * @return {error}   return an error message
+  */
+    malformedFile(fileContent) {
+      this.fileContent = fileContent;
+      const getNonObject = [];
+      fileContent.forEach((content) => {
+        if (content.title === undefined || content.text === undefined) {
+          getNonObject.push('error');
+        }
+      });
+      if (getNonObject.length > 0) {
+        return true;
+      }
+      return false;
+    } /**
   * emptyArray - checks for empty json file
   * @param  {object} fileContent takes in an object
   * @return {boolean}  return boolean(true)
@@ -77,15 +93,19 @@
       if (fileContent.length === 0) {
         return true;
       }
+      return false;
     }
-   /**
+  /**
    *  searchIndex - searches for the index of the valid json file created
-   * @param  {Object} index: array of object created in createIndex method
-   * @param  {string} fileName: name of file for search term
-   * @param  {array} terms: rest operator(term to be search for)
-   * @return {object} returns created index for term saerched.
+   * @param  {Object} index : created index
+   * @param  {string} fileName : name of file containing the search term
+   * @param  {string} terms:rest operator
+   * @return {array}  description return an array
    **/
     searchIndex(index, fileName, ...terms) {
+      console.log(fileName)
+      console.log(terms)
+      console.log(index)
       this.fileContent = fileName;
       const searchResult = {};
       fileName = Object.keys(index)[0];
@@ -107,4 +127,5 @@
       return searchResult;
     }
   }
+
   export default InvertedIndex;
