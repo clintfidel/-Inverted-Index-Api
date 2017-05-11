@@ -7,3 +7,6 @@ script:
   - npm install
   - gulp run-tests
   - npm run dev
+exclude_paths:
+  - coverage/
+  - dist/**/*
