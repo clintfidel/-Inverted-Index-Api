@@ -42,8 +42,7 @@
     "gulp-watch": "^4.3.11"
   },
   "scripts": {
-    "test": "gulp run-tests",
-    "run-test": "gulp coverage",
+    "dev": "gulp coveralls",
     "transpile": "babel src/*js, test/*js",
     "start": "nodemon --exec babel-node -- src/app.js"
   },
