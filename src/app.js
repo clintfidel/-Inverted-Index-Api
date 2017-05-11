@@ -18,3 +18,4 @@ app.listen(process.env.PORT_PROD, () => {
   console.log(`listening to server @ port ${process.env.PORT_PROD}`);
 });
 
+export default app;
