@@ -13,22 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/api/v0', routes);
 
-// app.use((err, req, res, next) => {
-//   res.status(200).send('Request could not be completed. Please try again');
-// });
 
-/* const port = () => {
-  if (process.env.NODE_ENV === 'DEV') {
-    return config.development.PORT;
-  } else if (process.env.NODE_ENV === 'TEST') {
-    return config.test.PORT;
-  }
-  return config.production.PORT;
-};*/
-
-
-
-// routes(app);
 app.listen(process.env.PORT_PROD, () => {
   console.log(`listening to server @ port ${process.env.PORT_PROD}`);
 });
