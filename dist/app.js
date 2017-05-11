@@ -27,20 +27,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 // importing bodyParser module
 // importing  express framework
-_dotenv2.default.config(); // imporrting the config file
+_dotenv2.default.config(); // importing the config file
 // importing dotenv library
 
 var app = (0, _express2.default)();
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(_bodyParser2.default.json());
-app.use('/api', _routes2.default);
-process.env.NODE_ENV = 'production';
+app.use('/api/v0', _routes2.default);
 
-var port = _config2.default[process.env.NODE_ENV].PORT;
-app.listen(port, function (err) {
-  if (!err) {
-    console.log('listening to server @ port ' + port);
-  } else {
-    console.log(err);
-  }
+// app.use((err, req, res, next) => {
+//   res.status(200).send('Request could not be completed. Please try again');
+// });
+
+// const port = () => {
+//   if (process.env.NODE_ENV === 'DEV') {
+//     return process.env.PORT_DEV;
+//   } else if (process.env.NODE_ENV === 'TEST') {
+//     return process.env.PORT_TEST;
+//   }
+//   return process.env.PORT_PROD || 4000;
+// };
+var port = 5000;
+
+// routes(app);
+app.listen(port, function () {
+  console.log('listening to server @ port ' + port);
 });

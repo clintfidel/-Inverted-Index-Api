@@ -1,5 +1,6 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 
+// dotenv.config();
 dotenv.load();
 module.exports = {
   development: {

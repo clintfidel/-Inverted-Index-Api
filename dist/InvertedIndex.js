@@ -6,28 +6,29 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * global class declaration
+ * InvertedIndex class
  */
 var InvertedIndex = function () {
   /**
-   * constructor - takes in json file
-   * @return {type}  description
+   * constructor - contain class properties
    */
   function InvertedIndex() {
     _classCallCheck(this, InvertedIndex);
 
-    this.indices = {};
+    this.allIndices = {};
     this.fileContent = '';
   }
   /**
-   * createIndex - creates index for json files e.g of:[0,1,2,3,4]
-   * @param  {string} fileName    description
-   * @param  {object} fileContent description
-   * @return {object}   returns
-   */
+    * createIndex - creates index for json files e.g {of:[0,1,2,3,4]}
+    * @param  {string} fileName : string
+    * @param  {object} fileContent :array of object
+    * @return {object} returns : object
+    */
 
 
   _createClass(InvertedIndex, [{
@@ -38,14 +39,13 @@ var InvertedIndex = function () {
       var indices = {};
       if (!this.emptyArray(fileContent) && this.invalidFile(fileContent) === false) {
         fileContent.forEach(function (element, index) {
-          var allText = element.title + ' ' + element.text;
+          var allText = element.text;
           var bookToken = _this.getToken(allText);
           bookToken.forEach(function (token) {
             if (token in indices) {
-              var tokenResult = indices[token];
-              if (tokenResult.indexOf(index) === -1) {
-                indices[token].push(index);
-              }
+              indices[token].push(index);
+            } else if (token === '') {
+              token = '';
             } else {
               indices[token] = [index];
             }
@@ -54,21 +54,24 @@ var InvertedIndex = function () {
       } else {
         return 'Invalid File Content';
       }
-      return indices;
+      this.allIndices[fileName] = indices;
+      return this.allIndices;
     }
     /**
-     * getToken - splits text by spaces and return an array
-     * @param  {string} text takes in text in form of string
-     * @return {object}   returns an array
-     */
+      * getToken -  replaces non-alphanemeric characters with a space
+      * also splits text by spaces
+      * @param  {string} text takes in text in form of string
+      * @return {object}   returns an array
+      */
 
   }, {
     key: 'getToken',
     value: function getToken(text) {
       this.fileContent = text;
-      return text.toLowerCase() // turns to lower case
-      .split(/\s+/); // splits by spaces
+      text = text.replace(/[^A-Za-z0-9]/g, ' ');
+      return text.toLowerCase().split(/\s+/);
     }
+
     /**
      * invalidFile - checks for invalid json file
      * @param  {object} fileContent takes in an object
@@ -78,13 +81,15 @@ var InvertedIndex = function () {
   }, {
     key: 'invalidFile',
     value: function invalidFile(fileContent) {
-      this.fileContent = fileContent;
+      var _this2 = this;
+
       var status = false;
-      if (fileContent.some(function (arraryObject) {
-        return arraryObject.title === undefined || arraryObject.text === undefined;
-      })) {
-        status = true;
-      }
+      fileContent.forEach(function (book) {
+        if (!book.title || !book.text) {
+          status = true;
+          _this2.fileContent = fileContent;
+        }
+      });
       return status;
     }
     /**
@@ -98,61 +103,44 @@ var InvertedIndex = function () {
     value: function emptyArray(fileContent) {
       this.fileContent = fileContent;
       if (fileContent.length === 0) {
-        return 'emptyJson';
+        return true;
       }
     }
     /**
-     *  searchIndex - searches for the index of the valid json file created
-     * @param  {Object} fileContent object as an arg
-     * @param  {object} terms    array of object
-     * @return {Object}             description
-     **/
+    *  searchIndex - searches for the index of the valid json file created
+    * @param  {Object} index: array of object created in createIndex method
+    * @param  {string} fileName: name of file for search term
+    * @param  {array} terms: rest operator(term to be search for)
+    * @return {object} returns created index for term saerched.
+    **/
 
   }, {
     key: 'searchIndex',
-    value: function searchIndex(fileContent) {
-      var collector = [];
-      var eachKey = this.createIndex('boy', fileContent);
+    value: function searchIndex(index, fileName) {
+      this.fileContent = fileName;
+      var searchResult = {};
+      fileName = Object.keys(index)[0];
+      var eachKeys = Object.keys(index[fileName]);
 
-      for (var _len = arguments.length, terms = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        terms[_key - 1] = arguments[_key];
+      for (var _len = arguments.length, terms = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        terms[_key - 2] = arguments[_key];
       }
 
-      if (terms.length === 1) {
-        var splitTerms = terms[0].toLowerCase(); // turns array to lowercase
-        splitTerms = splitTerms.split(/[\s]/g); // splits by spaces
-        var eachKeys = Object.keys(eachKey);
-        splitTerms.forEach(function (element) {
-          // loops through an array
-          for (var indexKey = 0; indexKey < eachKeys.length; indexKey += 1) {
-            if (element === eachKeys[indexKey]) {
-              collector.push(eachKey[eachKeys[indexKey]]); // appends index of eachkey
+      for (var i = 0; i < terms.length; i += 1) {
+        var splitTerms = terms[i].toLowerCase();
+        splitTerms = splitTerms.split(/[\s]/g);
+        for (var j = 0; j < splitTerms.length; j += 1) {
+          for (var indexes = 0; indexes < eachKeys.length; indexes += 1) {
+            if (!(splitTerms[j] in index[fileName])) {
+              Object.assign(searchResult, _defineProperty({}, splitTerms[j], 'Not found!'));
             }
-          }
-        });
-      } else if (terms.length >= 2) {
-        eachKey = this.createIndex('boy', fileContent);
-        var _eachKeys = Object.keys(eachKey);
-        for (var i = 0; i < terms.length; i += 1) {
-          var _splitTerms = terms[i].toLowerCase();
-          _splitTerms = _splitTerms.split(/[\s]/g);
-          for (var j = 0; j < _splitTerms.length; j += 1) {
-            for (var index = 0; index < _eachKeys.length; index += 1) {
-              if (_splitTerms[j] === _eachKeys[index]) {
-                collector.push(eachKey[_eachKeys[index]]);
-              }
+            if (splitTerms[j] === eachKeys[indexes]) {
+              Object.assign(searchResult, _defineProperty({}, splitTerms[j], index[fileName][eachKeys[indexes]]));
             }
           }
         }
       }
-
-      if (collector.length >= 1) {
-        collector.forEach(function (data) {
-          console.log(data);
-        });
-      } else {
-        return 'Not Found';
-      }
+      return searchResult;
     }
   }]);
 

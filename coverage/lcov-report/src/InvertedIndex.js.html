@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.49% </span>
+        <span class="strong">94.55% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>43/47</span>
+        <span class='fraction'>52/55</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.78% </span>
+        <span class="strong">86.96% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>14/18</span>
+        <span class='fraction'>20/23</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>9/9</span>
+        <span class='fraction'>10/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.11% </span>
+        <span class="strong">94.44% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>41/45</span>
+        <span class='fraction'>51/54</span>
       </div>
     </div>
   </div>
@@ -153,7 +153,25 @@
 108
 109
 110
-111</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -213,25 +231,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,6 +295,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -283,7 +319,7 @@
     createIndex(fileName, fileContent) {
       const indices = {};
       if (<span class="missing-if-branch" title="else path not taken" >E</span>!this.emptyArray(fileContent) &amp;&amp;
-      this.invalidFile(fileContent) === false) {
+      (!this.invalidFile(fileContent)) &amp;&amp; this.malformedFile(fileContent) === false) {
         fileContent.forEach((element, index) =&gt; {
           const allText = element.text;
           const bookToken = this.getToken(allText);
@@ -320,35 +356,52 @@
  /**
   * invalidFile - checks for invalid json file
   * @param  {object} fileContent takes in an object
-  * @return {boolean}   return a boolean(true)
+  * @return {error}   return an error message
   */
     invalidFile(fileContent) {
       this.fileContent = fileContent;
       let status = false;
-      if (<span class="missing-if-branch" title="if path not taken" >I</span>fileContent.some(arraryObject =&gt; arraryObject.title === undefined ||
-          arraryObject.text === undefined)) {
+      if (<span class="missing-if-branch" title="if path not taken" >I</span>!Array.isArray(fileContent)) {
         status = <span class="cstat-no" title="statement not covered" >true;</span>
       }
-&nbsp;
       return status;
     }
+&nbsp;
  /**
+  * malfomedFile - checks for invalid json file
+  * @param  {object} fileContent takes in an object
+  * @return {error}   return an error message
+  */
+    malformedFile(fileContent) {
+      this.fileContent = fileContent;
+      const getNonObject = [];
+      fileContent.forEach((content) =&gt; {
+        if (content.title === undefined || content.text === undefined) {
+          getNonObject.push('error');
+        }
+      });
+      if (getNonObject.length &gt; 0) {
+        return true;
+      }
+      return false;
+    } /**
   * emptyArray - checks for empty json file
   * @param  {object} fileContent takes in an object
   * @return {boolean}  return boolean(true)
   */
     emptyArray(fileContent) {
       this.fileContent = fileContent;
-      if (<span class="missing-if-branch" title="if path not taken" >I</span>fileContent.length === 0) {
-        return <span class="cstat-no" title="statement not covered" >true;</span>
+      if (fileContent.length === 0) {
+        return true;
       }
+      return false;
     }
-   /**
+  /**
    *  searchIndex - searches for the index of the valid json file created
-   * @param  {Object} index: array of object created in createIndex method
-   * @param  {string} fileName: name of file for search term
-   * @param  {array} terms: rest operator(term to be search for)
-   * @return {object} returns created index for term saerched.
+   * @param  {Object} index : created index
+   * @param  {string} fileName : name of file containing the search term
+   * @param  {string} terms:rest operator
+   * @return {array}  description return an array
    **/
     searchIndex(index, fileName, ...terms) {
       this.fileContent = fileName;
@@ -372,6 +425,7 @@
       return searchResult;
     }
   }
+&nbsp;
   export default InvertedIndex;
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -379,7 +433,7 @@
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed May 10 2017 14:31:41 GMT+0100 (WAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu May 11 2017 15:19:31 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../prettify.js"></script>

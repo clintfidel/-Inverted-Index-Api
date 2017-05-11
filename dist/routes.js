@@ -8,7 +8,7 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _InvertedIndex = require('../src/InvertedIndex');
+var _InvertedIndex = require('./InvertedIndex');
 
 var _InvertedIndex2 = _interopRequireDefault(_InvertedIndex);
 
@@ -18,14 +18,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var invertedIndex = new _InvertedIndex2.default(); // importing express for routing
 
-var api = _express2.default.Router();
+var app = _express2.default.Router();
 
-api.post('/createIndex', function (req, res) {
-  // console.log();
-  var result = invertedIndex.createIndex('books.json', req.body);
-  res.send(result);
+app.post('/createIndex', function (req, res) {
+  req.setEncoding('utf8');
+  var _req$body = req.body,
+      fileName = _req$body.fileName,
+      fileContent = _req$body.fileContent;
+
+  var createdIndex = invertedIndex.createIndex(fileName, JSON.parse(fileContent));
+  res.send(createdIndex);
 });
-api.post('/searchIndex', function (req, res) {
-  res.send(invertedIndex.searchIndex());
-});
-exports.default = api;
+
+// app.post('/searchIndex', (req, res) => {
+// const { index, fileName, ...terms } = req.body;
+// const searchTermResult = invertedIndex.SearchIndex(...term,(JSON.parse(index, fileName, ...terms);
+//   res.send(searchTermResult);
+// });
+
+
+exports.default = app;
