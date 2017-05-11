@@ -61,8 +61,8 @@ gulp.task('transpile', () => {
           .pipe(gulp.dest('dist'));
 });
 
-gulp.task('coveralls', ['run-tests'], () => {
-  return gulp.src('coverage/lcov.info')
+gulp.task('coveralls', ['coverage'], () => {
+  gulp.src('coverage/lcov.info')
     .pipe(coveralls());
 });
 
