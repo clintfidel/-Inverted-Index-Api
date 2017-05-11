@@ -16,7 +16,10 @@ const invertedindex = new InvertedIndex();
 describe('Inverted Index Class', () => {
   describe('Validate data', () => {
     it('Should return invalid file content for empty JSON Array', () => {
-      expect(invertedindex.emptyArray(emptyBook)).toBeFalsy();
+      expect(invertedindex.emptyArray(emptyBook)).toBeTruthy();
+    });
+    it('Should return true if the length of the filecontent is empty', () => {
+      expect(invertedindex.emptyArray(emptyBook)).toEqual(true);
     });
     it('Should check if invertedIndex is an instance of InvertedIndex Class', () => {
       expect(invertedindex instanceof InvertedIndex).toBeTruthy();
@@ -31,10 +34,7 @@ describe('Inverted Index Class', () => {
       expect('fileContent' in invertedindex).toBeTruthy();
     });
     it('Should return true for invalid Json file', () => {
-      expect(invertedindex.invalidFile(malformedBook)).toBeFalsy();
-    });
-    it('Should return true if the title and text of fileContent is undefined', () => {
-      expect(invertedindex.invalidFile(sampleFileContent === malformedBook)).toBeFalsy();
+      expect(invertedindex.malformedFile(malformedBook)).toBeTruthy();
     });
     it('Should return true for wrong key in Json file', () => {
       expect(invertedindex.invalidFile(sampleFileContent)).toBeFalsy();
@@ -63,6 +63,10 @@ describe('Inverted Index Class', () => {
   describe('searchIndex', () => {
     const result = invertedindex.createIndex('validBook', sampleFileContent);
     const resultIndex = invertedindex.searchIndex(result, 'validBook', 'string');
+    it('Should return the result from a search term', () => {
+      expect(resultIndex)
+      .toEqual({ string: [0, 1] });
+    });
     it('Should return the result from a search term', () => {
       expect(resultIndex)
       .toEqual({ string: [0, 1] });
