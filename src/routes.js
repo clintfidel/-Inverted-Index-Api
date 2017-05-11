@@ -1,15 +1,32 @@
 import express from 'express'; // importing express for routing
-import InvertedIndex from '../src/InvertedIndex'; // importing the InvertedIndex class
+import InvertedIndex from './InvertedIndex'; // importing the InvertedIndex class
 
 const invertedIndex = new InvertedIndex();
-const api = express.Router();
+const app = express.Router();
+let createdIndex;
 
-api.post('/createIndex', (req, res) => {
-  // console.log();
-  const result = invertedIndex.createIndex('books.json', req.body);
-  res.send(result);
+app.post('/createIndex', (req, res) => {
+  try {
+    req.setEncoding('utf8');
+    const { fileName, fileContent } = req.body;
+    createdIndex = invertedIndex.createIndex(fileName, JSON.parse(fileContent));
+    res.status(200).send(createdIndex);
+  } catch (err) {
+    res.status(500).send('Request could not be completed. Please try again');
+  }
 });
-api.post('/searchIndex', (req, res) => {
-  res.send(invertedIndex.searchIndex());
+
+app.post('/searchIndex', (req, res) => {
+  try {
+    const { fileName, terms } = req.body;
+    const index = createdIndex;
+    const searchTermResult =
+    invertedIndex.searchIndex(index, fileName, terms);
+    res.status(200).send(searchTermResult);
+  } catch (err) {
+    res.status(500).send('Request could not be completed. Please try again');  
+  }
 });
-export default api;
+
+
+export default app;
