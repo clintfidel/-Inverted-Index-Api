@@ -7,10 +7,10 @@
   */
     constructor() {
       this.allIndices = {};
-      this.fileContent = '';
+      this.fileContent = {};
     }
   /**
-    * createIndex - creates index for json files e.g {of:[0,1,2,3,4]}
+    * createIndex - creates index for json files
     * @param  {string} fileName : string
     * @param  {object} fileContent :array of object
     * @return {object} returns : object
@@ -18,7 +18,8 @@
     createIndex(fileName, fileContent) {
       const indices = {};
       if (!this.emptyArray(fileContent) &&
-      (!this.invalidFile(fileContent)) && this.malformedFile(fileContent) === false) {
+      (!this.invalidFile(fileContent)) &&
+      this.malformedFile(fileContent) === false) {
         fileContent.forEach((element, index) => {
           const allText = element.text;
           const bookToken = this.getToken(allText);
@@ -50,12 +51,10 @@
       return text.toLowerCase()
       .split(/\s+/);
     }
-
-
  /**
   * invalidFile - checks for invalid json file
   * @param  {object} fileContent takes in an object
-  * @return {error}   return an error message
+  * @return {boolean}   returns an error message
   */
     invalidFile(fileContent) {
       this.fileContent = fileContent;
@@ -65,17 +64,17 @@
       }
       return status;
     }
-
  /**
   * malfomedFile - checks for invalid json file
   * @param  {object} fileContent takes in an object
-  * @return {error}   return an error message
+  * @return {boolean}   returns an error message
   */
     malformedFile(fileContent) {
       this.fileContent = fileContent;
       const getNonObject = [];
       fileContent.forEach((content) => {
-        if (content.title === undefined || content.text === undefined) {
+        if (content.title === undefined ||
+         content.text === undefined) {
           getNonObject.push('error');
         }
       });
@@ -99,7 +98,7 @@
    *  searchIndex - searches for the index of the valid json file created
    * @param  {Object} index : created index
    * @param  {string} fileName : name of file containing the search term
-   * @param  {string} terms:rest operator
+   * @param  {string} terms: rest operator
    * @return {array}  description return an array
    **/
     searchIndex(index, fileName, ...terms) {
