@@ -2,6 +2,7 @@ import gulp from 'gulp';
 import babel from 'gulp-babel';
 import server from 'gulp-nodemon';
 import watch from 'gulp-watch';
+import exit from 'gulp-exit';
 import coveralls from 'gulp-coveralls';
 import istanbul from 'gulp-babel-istanbul';
 import jasmineNode from 'gulp-jasmine-node';
@@ -18,7 +19,8 @@ gulp.task('pre-test', () => {
 gulp.task('run-tests', () => {
   gulp.src('test/*.js')
       .pipe(babel())
-      .pipe(jasmineNode());
+      .pipe(jasmineNode())
+      .pipe(exit());
 });
 
 // Test Coverage: sends report to coverage folder
@@ -33,7 +35,8 @@ gulp.task('coverage', (cb) => {
       .pipe(jasmineNode())
       .pipe(istanbul.writeReports())
       .pipe(istanbul.enforceThresholds({ thresholds: { global: 50 } }))
-      .on('end', cb);
+      .on('end', cb)
+      .pipe(exit());
     });
 });
 
@@ -72,7 +75,7 @@ gulp.task('start', ['serve'], () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch('src/app.js, src/routes.js', ['serve']);
+  gulp.watch('src/app.js, src/routes.js, test/*.js', ['serve']);
 });
 
 gulp.task('default', ['pre-test', 'run-tests', 'serve', 'coveralls', 'transpile', 'watch']);
