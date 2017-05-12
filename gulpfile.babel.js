@@ -35,8 +35,7 @@ gulp.task('coverage', (cb) => {
       .pipe(jasmineNode())
       .pipe(istanbul.writeReports())
       .pipe(istanbul.enforceThresholds({ thresholds: { global: 50 } }))
-      .on('end', cb)
-      .pipe(exit());
+      .on('end', cb);
     });
 });
 

@@ -1,5 +1,5 @@
 import supertest from 'supertest';
-import app from '../src/app';
+import server from '../src/app';
 import emptyBook from '../fixtures/emptyBook.json';
 import malformedBook from '../fixtures/malformedBook.json';
 import validBook from '../fixtures/validBook.json';
@@ -9,7 +9,9 @@ import improperBook from '../fixtures/improperBook.json';
 const sampleFileContent = samples.sampleFileContent;
 const sampleResult = samples.sampleResult;
 
-const api = supertest(app);
+const api = supertest(server);
+
+describe('apitest', () => {
 
 
 describe('createIndex route', () => {
@@ -135,4 +137,6 @@ describe('searchIndex route', () => {
     });
     });
   });
+});
+  server.close();
 });
