@@ -15,7 +15,6 @@ app.post('/createIndex', (req, res) => {
     res.status(500).send('Request could not be completed. Please try again');
   }
 });
-
 app.post('/searchIndex', (req, res) => {
   try {
     const { fileName, terms } = req.body;
