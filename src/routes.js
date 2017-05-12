@@ -26,6 +26,9 @@ app.post('/searchIndex', (req, res) => {
     res.status(500).send('Request could not be completed. Please try again');
   }
 });
+app.all('*', (req, res) => {
+  res.status(400).send('ERROR: bad request');
+});
 
 
 export default app;
