@@ -15,4 +15,9 @@ app.use('/api/v0', routes);
 app.listen(process.env.PORT_PROD, () => {
 });
 
+
+app.all('*', (req, res) => {
+  res.status(400).send('ERROR: bad request');
+});
+
 export default app;
