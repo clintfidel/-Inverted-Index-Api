@@ -1,7 +1,6 @@
 # -Inverted-Index-Api
 [![Build Status](https://www.travis-ci.org/clintfidel/inverted-index-api.svg?branch=development)](https://www.travis-ci.org/clintfidel/inverted-index-api)
-[![Coverage Status](https://coveralls.io/repos/github/clintfidel/inverted-index-api/badge.svg?branch=master)](https://coveralls.io/github/clintfidel/inverted-index-api?branch=master)
-
+[![Coverage Status](https://coveralls.io/repos/github/clintfidel/inverted-index-api/badge.svg?branch=development)](https://coveralls.io/github/clintfidel/inverted-index-api?branch=development)
 ## Introduction
 *  **`Inverted-Index-Api`** is an Aplication developed with JavaScript/Node for implementing efficient search functionality for softwares.
 *  It has the following features;
