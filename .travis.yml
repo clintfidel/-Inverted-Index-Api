@@ -1,8 +1,7 @@
-dist: trusty
 language: node_js
 node_js:
   - node
-  - '6'
+  - "6"
 script:
   - npm install
   - gulp run-tests
