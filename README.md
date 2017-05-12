@@ -1,8 +1,7 @@
 # -Inverted-Index-Api
 [![Build Status](https://www.travis-ci.org/clintfidel/inverted-index-api.svg?branch=development)](https://www.travis-ci.org/clintfidel/inverted-index-api)
 [![Coverage Status](https://coveralls.io/repos/github/clintfidel/inverted-index-api/badge.svg?branch=development)](https://coveralls.io/github/clintfidel/inverted-index-api?branch=development)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f6696a952169468eac1682893daaebc2)](https://www.codacy.com/app/clintfidel/inverted-index-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=clintfidel/inverted-index-api&amp;utm_campaign=Badge_Grade)
-## Introduction
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f6696a952169468eac1682893daaebc2)](https://www.codacy.com/app/clintfidel/inverted-index-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=clintfidel/inverted-index-api&amp;utm_campaign=Badge_Grade)## Introduction
 *  **`Inverted-Index-Api`** is an Aplication developed with JavaScript/Node for implementing efficient search functionality for softwares.
 *  It has the following features;
   *  Create Index for a valid Json file having more than content(book) one  at the same time.
